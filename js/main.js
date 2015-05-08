@@ -5,11 +5,13 @@ $(function() {
 var html = ['<div id="xaes-box">',
               '<h1>Xbox Achievement Enhancement Suite</h1>',
               '<h3>Filter by which person has the achievement unlocked.</h3>',
+              '<button id="reset">All</button>',
               '<button id="one-person">Either Person</button>',
               '<button id="neither-person">Neither Person</button>',
               '<button id="left-person">Left Person</button>',
               '<button id="right-person">Right Person</button>',
-              '<button id="reset">Reset</button>',
+              '<h3>Filter by achievement name or description.</h3>',
+              '<input type ="text" id="filter-titles" placeholder="Just start typing">',
             '</div>'
           ].join('');
 
@@ -34,6 +36,10 @@ $('#right-person').click(function() {
 
 $('#reset').click(function() {
   reset();
+});
+
+$('#filter-titles').on('input', function() {
+  matchTitle($('#filter-titles').val());
 });
 
 
@@ -89,6 +95,22 @@ function reset() {
 }
 
 // achievements that match this regex title
+function matchTitle(query) {
+  query = query.toLowerCase();
+  $.each($('.item'), function() {
+    var title = $(this).children('.achievementImage')
+                .children('.achievementDescription')
+                .children('.achievementTitle').text().toLowerCase();
+    var description = $(this).children('.achievementImage')
+                      .children('.achievementDescription')
+                      .children('.description').text().toLowerCase();
+    if(!title.match(query) && !description.match(query)) {
+      $(this).hide();
+    } else {
+      $(this).show();
+    }
+  });
+}
 // achievements that match this regex description
 // sort alphabetically by title
 // sort by achievement score
