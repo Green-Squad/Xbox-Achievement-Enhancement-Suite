@@ -10,7 +10,8 @@
     {
       "matches": ["https://account.xbox.com/*"],
       "css": ["css/style.css"],
-      "js": ["js/libs/jquery-2.1.4.min.js", "js/main.js"]
+      "js": ["js/libs/jquery-2.1.4.min.js", "js/main.js"],
+      "run_at": "document_start"
     }
   ],
   "page_action" :

@@ -2,38 +2,39 @@ $(function() {
 
 // compare page
 
-var html = '<h1>Xbox Achievement Enhancement Suite</h1>';
-html += '<button id="a">Only One</button><button id="b">Neither</button><button id="c">Left</button><button id="d">Right</button>';
-
 var html = ['<div id="xaes-box">',
               '<h1>Xbox Achievement Enhancement Suite</h1>',
               '<h3>Filter by which person has the achievement unlocked.</h3>',
-              '<button id="a">Either Person</button>',
-              '<button id="b">Neither Person</button>',
-              '<button id="c">Left Person</button>',
-              '<button id="d">Right Person</button>',
+              '<button id="one-person">Either Person</button>',
+              '<button id="neither-person">Neither Person</button>',
+              '<button id="left-person">Left Person</button>',
+              '<button id="right-person">Right Person</button>',
+              '<button id="reset">Reset</button>',
             '</div>'
           ].join('');
 
 
 $('.achievementData').after(html);
 
-$('#a').click(function() {
+$('#one-person').click(function() {
   onlyOnePerson();
 });
 
-$('#b').click(function() {
+$('#neither-person').click(function() {
   neitherPerson();
 });
 
-$('#c').click(function() {
+$('#left-person').click(function() {
   leftPerson();
 });
 
-$('#d').click(function() {
+$('#right-person').click(function() {
   rightPerson();
 });
 
+$('#reset').click(function() {
+  reset();
+});
 
 
 // achievements that only one person  has
@@ -77,6 +78,13 @@ function rightPerson() {
     } else {
       $(this).show();
     }
+  });
+}
+
+// show all
+function reset() {
+  $.each($('.item'), function() {
+    $(this).show();
   });
 }
 
