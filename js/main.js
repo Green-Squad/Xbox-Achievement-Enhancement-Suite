@@ -5,11 +5,28 @@ $(function() {
 var html = ['<div id="xaes-box">',
               '<h1>Xbox Achievement Enhancement Suite</h1>',
               '<h3>Filter by which person has the achievement unlocked.</h3>',
-              '<button id="reset">All</button>',
-              '<button id="one-person">Either Person</button>',
-              '<button id="neither-person">Neither Person</button>',
-              '<button id="left-person">Left Person</button>',
-              '<button id="right-person">Right Person</button>',
+              '<div class="btn-group">',
+                '<span class="btn btn-primary active">',
+                  '<input type="radio" name="filter" id="all" value="all" checked="checked">',
+                  '<label for="all">All</label>',
+                '</span>',
+                '<span class="btn btn-primary">',
+                  '<input type="radio" name="filter" id="one-person" value="one-person">',
+                  '<label for="one-person">Only One Person</label>',
+                '</span>',
+                '<span class="btn btn-primary">',
+                  '<input type="radio" name="filter" id="neither-person" value="neither-person">',
+                  '<label for="neither-person">Neither Person</label>',
+                '</span>',
+                '<span class="btn btn-primary">',
+                  '<input type="radio" name="filter" id="left-person" value="left-person">',
+                  '<label for="left-person">Left Person</label>',
+                '</span>',
+                '<span class="btn btn-primary">',
+                  '<input type="radio" name="filter" id="right-person" value="right-person">',
+                  '<label for="right-person">Right Person</label>',
+                '</span>',
+              '</div>',
               '<h3>Filter by achievement name or description.</h3>',
               '<input type ="text" id="filter-titles" placeholder="Just start typing">',
             '</div>'
@@ -18,25 +35,27 @@ var html = ['<div id="xaes-box">',
 
 $('.achievementData').after(html);
 
-$('#one-person').click(function() {
-  onlyOnePerson();
+$('#xaes-box .btn').click(function() {
+  $($(this).children('input[type=radio]')).trigger('change').prop("checked", true);
+  $('#xaes-box .btn').removeClass('active');
+  $(this).addClass('active');
 });
 
-$('#neither-person').click(function() {
-  neitherPerson();
+$('input[type=radio]').change(function() {
+   var value = $(this).attr('value');
+   if (value == 'all') {
+     reset();
+   } else if (value == 'one-person') {
+     onlyOnePerson();
+   } else if (value == 'neither-person') {
+     neitherPerson();
+   } else if (value == 'left-person') {
+     leftPerson();
+   } else if (value == 'right-person') {
+     rightPerson();
+   }
 });
 
-$('#left-person').click(function() {
-  leftPerson();
-});
-
-$('#right-person').click(function() {
-  rightPerson();
-});
-
-$('#reset').click(function() {
-  reset();
-});
 
 $('#filter-titles').on('input', function() {
   matchTitle($('#filter-titles').val());
@@ -47,9 +66,9 @@ $('#filter-titles').on('input', function() {
 function onlyOnePerson() {
   $.each($('.item'), function() {
     if($(this).children('.achievementDetail').size() !== 1) {
-      $(this).hide();
+      $(this).addClass('radio-level-hide');
     } else {
-      $(this).show();
+      $(this).removeClass('radio-level-hide');
     }
   });
 }
@@ -58,9 +77,9 @@ function onlyOnePerson() {
 function neitherPerson() {
   $.each($('.item'), function() {
     if($(this).children('.noAchievementDetail').size() !== 2) {
-      $(this).hide();
+      $(this).addClass('radio-level-hide');
     } else {
-      $(this).show();
+      $(this).removeClass('radio-level-hide');
     }
   });
 }
@@ -69,9 +88,9 @@ function neitherPerson() {
 function leftPerson() {
   $.each($('.item'), function() {
     if($(this).children('.achievementDetail').size() !== 1 || $($(this).children().get(2)).hasClass('achievementDetail')) {
-      $(this).hide();
+      $(this).addClass('radio-level-hide');
     } else {
-      $(this).show();
+      $(this).removeClass('radio-level-hide');
     }
   });
 }
@@ -80,9 +99,9 @@ function leftPerson() {
 function rightPerson() {
   $.each($('.item'), function() {
     if($(this).children('.achievementDetail').size() !== 1 || $($(this).children().get(1)).hasClass('achievementDetail')) {
-      $(this).hide();
+      $(this).addClass('radio-level-hide');
     } else {
-      $(this).show();
+      $(this).removeClass('radio-level-hide');
     }
   });
 }
@@ -90,7 +109,7 @@ function rightPerson() {
 // show all
 function reset() {
   $.each($('.item'), function() {
-    $(this).show();
+    $(this).removeClass('radio-level-hide');
   });
 }
 
@@ -105,9 +124,9 @@ function matchTitle(query) {
                       .children('.achievementDescription')
                       .children('.description').text().toLowerCase();
     if(!title.match(query) && !description.match(query)) {
-      $(this).hide();
+      $(this).addClass('text-level-hide');
     } else {
-      $(this).show();
+      $(this).removeClass('text-level-hide');
     }
   });
 }
