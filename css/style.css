@@ -1,0 +1,11 @@
+#xaes-box {
+  padding: 10px 0 60px 0;
+  width: 100%;
+  border-bottom: 1px solid #222;
+  font-size: 15px;
+}
+
+#xaes-box h1, #xaes-box h2, #xaes-box h3, 
+#xaes-box h4, #xaes-box h5, #xaes-box h6 {
+  font-weight: normal;
+}

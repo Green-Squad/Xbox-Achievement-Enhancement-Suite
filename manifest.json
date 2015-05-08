@@ -1,0 +1,29 @@
+{
+  "name": "Xbox Achievement Enhancement Suite",
+  "version": "1.0",
+  "description": "Filter and sort Xbox Live Achievements.",
+  "background": {
+    "scripts": ["js/background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://account.xbox.com/*"],
+      "css": ["css/style.css"],
+      "js": ["js/libs/jquery-2.1.4.min.js", "js/main.js"]
+    }
+  ],
+  "page_action" :
+  {
+    "default_icon" : "images/icon-19.png",
+    "default_title" : "Xbox Achievement Enhancement Suite "
+  },
+  "permissions" : [
+    "declarativeContent"
+  ],
+  "icons" : {
+    "48" : "images/icon-48.png",
+    "128" : "images/icon-128.png"
+  },
+  "manifest_version": 2
+}
