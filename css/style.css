@@ -1,9 +1,16 @@
 #xaes-box {
   padding: 10px 0 40px 0;
   width: 100%;
-  border-bottom: 1px solid #222;
   font-size: 15px;
   -webkit-animation: fadein 1.5s;
+}
+
+.border-top {
+  border-top: 1px solid #222;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #222;
 }
 
 @-webkit-keyframes fadein {
@@ -41,6 +48,10 @@
 
 .text-level-hide {
   display: none;
+}
+
+.guide {
+  margin-top: 10px;
 }
 
 /*!

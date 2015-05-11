@@ -2,7 +2,10 @@ $(function() {
 
 // compare page
 
-var html = ['<div id="xaes-box">',
+var game = $('.gameTitle span').text() || $('.titleName').text();
+game = $.trim(game);
+
+var compareHtml = ['<div id="xaes-box" class="border-bottom">',
               '<h1>Xbox Achievement Enhancement Suite</h1>',
               '<h3>Filter by which person has the achievement unlocked.</h3>',
               '<div class="btn-group">',
@@ -32,13 +35,47 @@ var html = ['<div id="xaes-box">',
             '</div>'
           ].join('');
 
+var singleHtml = ['<div id="xaes-box" class="border-top">',
+                    '<h1>Xbox Achievement Enhancement Suite</h1>',
+                    '<h3>Filter achievements.</h3>',
+                    '<span id="toggle-images" class="btn btn-primary" style="float: right;">Toggle Images</span>',
+                    '<div class="btn-group">',
+                      '<span class="btn btn-primary active">',
+                        '<input type="radio" name="filter" id="single-all" value="single-all" checked="checked">',
+                        '<label for="single-all">All</label>',
+                      '</span>',
+                      '<span class="btn btn-primary">',
+                        '<input type="radio" name="filter" id="unlocked" value="unlocked">',
+                        '<label for="unlocked">Unlocked</label>',
+                      '</span>',
+                      '<span class="btn btn-primary">',
+                        '<input type="radio" name="filter" id="locked" value="locked">',
+                        '<label for="locked">Locked</label>',
+                      '</span>',
+                    '</div>',
+                    '<h3>Filter by achievement name or description.</h3>',
+                    '<input type ="text" id="filter-titles-single" placeholder="Just start typing">',
+                  '</div>'
+                ].join('');
 
-$('.achievementData').after(html);
 
-$('#xaes-box .btn').click(function() {
+$('.achievementData').after(compareHtml);
+$('.userInfoAndTitleImage').after(singleHtml);
+
+// Add achievement guide buttons
+achievementGuide();
+achievementGuideSingle();
+
+
+// Event listeners
+$('#xaes-box .btn-group .btn').click(function() {
   $($(this).children('input[type=radio]')).trigger('change').prop("checked", true);
   $('#xaes-box .btn').removeClass('active');
   $(this).addClass('active');
+});
+
+$('#toggle-images').click(function() {
+  toggleImages();
 });
 
 $('input[type=radio]').change(function() {
@@ -53,12 +90,22 @@ $('input[type=radio]').change(function() {
      leftPerson();
    } else if (value == 'right-person') {
      rightPerson();
+   } else if (value == 'unlocked') {
+     unlocked();
+   } else if (value == 'locked') {
+     locked();
+   } else if (value == 'single-all') {
+     singleAll();
    }
 });
 
 
 $('#filter-titles').on('input', function() {
   matchTitle($('#filter-titles').val());
+});
+
+$('#filter-titles-single').on('input', function() {
+  matchTitleSingle($('#filter-titles-single').val());
 });
 
 
@@ -130,11 +177,64 @@ function matchTitle(query) {
     }
   });
 }
-// achievements that match this regex description
-// sort alphabetically by title
-// sort by achievement score
-// add link to achievement guide
 
+function matchTitleSingle(query) {
+  query = query.toLowerCase();
+  $.each($('.bodyContent li'), function() {
+    var title = $(this).children('.achievementInfo')
+                .children('.achievementName')
+                .children('a').text().toLowerCase();
+    var description = $(this).children('.achievementInfo')
+                      .children('.achievementDescription')
+                      .text().toLowerCase();
+    if(!title.match(query) && !description.match(query)) {
+      $(this).addClass('text-level-hide');
+    } else {
+      $(this).removeClass('text-level-hide');
+    }
+  });
+}
 
+function achievementGuide() {
+  $.each($('.achievementImage'), function() {
+    var title = $(this).children('.achievementDescription')
+                .children('.achievementTitle').text();
+    var guide = '<a href="http://google.com/#q=' + $.trim(title) +
+                ' achievement guide ' + game +
+                '" class="btn btn-primary guide">Guide</a>';
+    $($(this).children('.achievementDescription')).append(guide);
+  });
+}
+
+function achievementGuideSingle() {
+  $.each($('li .achievementInfo'), function() {
+    var title = $(this).children('.achievementName')
+                .children('a').text();
+    var guide = '<a href="http://google.com/#q=' + $.trim(title) +
+                ' achievement guide ' + game +
+                '" class="btn btn-primary guide">Guide</a>';
+    $(this).append(guide);
+  });
+
+}
+
+function locked() {
+  $('.earnedAchievementsInfo').addClass('radio-level-hide');
+  $('.lockedAchievementsInfo').removeClass('radio-level-hide');
+}
+
+function unlocked() {
+  $('.earnedAchievementsInfo').removeClass('radio-level-hide');
+  $('.lockedAchievementsInfo').addClass('radio-level-hide');
+}
+
+function singleAll() {
+  $('.earnedAchievementsInfo').removeClass('radio-level-hide');
+  $('.lockedAchievementsInfo').removeClass('radio-level-hide');
+}
 
 });
+
+function toggleImages() {
+  $('.achievementImageWrapper').toggle();
+}
