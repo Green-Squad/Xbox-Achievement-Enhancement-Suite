@@ -12,17 +12,24 @@ Xbox.com has all of the data needed and it does not have an update cap. That is 
 
 First, get the extension by either:
 
-- Downloading from the Chrome Web Store (soon).  
+- Downloading from the [Chrome Web Store](https://chrome.google.com/webstore/detail/xbox-achievement-enhancem/mglbdbblfpcfbbihmnfblknlinhalmch).  
 - Or by cloning this project and [loading the unpacked extension](https://developer.chrome.com/extensions/getstarted#unpacked).
 
 Once installed, sign into Xbox.com and go to a game's achievement page like [this one](https://account.xbox.com/en-US/Achievements/XboxOne/1144039928). You can even go to a comparison page with a friend like [this](https://account.xbox.com/en-US/Compare/XboxOne/1144039928?gamertag=major%20nelson).
 
 You should then see a box embedded in the page titled *Xbox Achievement Enhancement Suite*.  
 
-Click the buttons to filter the items and search the titles and descriptions in the text box for further filtering.
+Click the buttons to filter the items and search the titles and descriptions in the text box for further filtering.  
+
+Each achievement also has a guide button that will link you to relevant Google search results. 
 
 ## How do I contribute?
 
-If you are a developer, then feel free to submit a pull request.
+If you are a developer, then feel free to submit a pull request. See our wishlist below for changes we want to make.
 
 Otherwise, if you have an idea or found a bug, then submit it to the issue tracker.
+
+## Wishlist
+
+- Remove Zepto dependency.
+- Load analytics remotely. 
