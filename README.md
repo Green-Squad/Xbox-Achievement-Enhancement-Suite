@@ -21,7 +21,7 @@ You should then see a box embedded in the page titled *Xbox Achievement Enhancem
 
 Click the buttons to filter the items and search the titles and descriptions in the text box for further filtering.  
 
-Each achievement also has a guide button that will link you to relevant Google search results. 
+Each achievement also has a guide button that will link you to relevant Google search results.
 
 ## How do I contribute?
 
@@ -29,7 +29,14 @@ If you are a developer, then feel free to submit a pull request. See our wishlis
 
 Otherwise, if you have an idea or found a bug, then submit it to the issue tracker.
 
+## Permissions explained
+
+We are not tracking your browser history.  The permissions for this extension are used to only load the scripts when you are on the relevant pages as to not slow down your browser when they not needed.
+
+We are using Google Analytics to see how many people are using the extension. We can see the paths you go to on https://account.xbox.com, but not any data or personal information.
+
 ## Wishlist
 
 - Remove Zepto dependency.
-- Load analytics remotely. 
+- Load analytics remotely.
+- Minimize permissions.
