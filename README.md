@@ -31,7 +31,7 @@ Otherwise, if you have an idea or found a bug, then submit it to the issue track
 
 ## Permissions explained
 
-We are not tracking your browser history.  The permissions for this extension are used to only load the scripts when you are on the relevant pages as to not slow down your browser when they not needed.
+We are not tracking your browser history.  The permissions for this extension are used to only load the scripts when you are on the relevant pages as to not slow down your browser when they are not needed.
 
 We are using Google Analytics to see how many people are using the extension. We can see the paths you go to on https://account.xbox.com, but not any data or personal information.
 
