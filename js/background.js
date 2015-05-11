@@ -12,7 +12,7 @@ chrome.runtime.onInstalled.addListener(function() {
         // That fires when a page's URL contains 'xbox.com' ...
         conditions: [
           new chrome.declarativeContent.PageStateMatcher({
-            pageUrl: { urlContains: 'xbox\.com' },
+            pageUrl: { urlContains: 'account\.xbox\.com' },
           })
         ],
         // And shows the extension's page action.
