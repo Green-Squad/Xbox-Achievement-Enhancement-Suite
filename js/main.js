@@ -1,80 +1,104 @@
-$(function() {
+// Compare Page
+if (document.getElementsByClassName('gameTitle')[0]) {
+  // Get game title
+  game = document.getElementsByClassName('gameTitle')[0].getElementsByTagName('span')[0].textContent;
+  // Insert XAES content
+  insertCompare();
+  // Add achievement guide buttons
+  achievementGuide();
+}
 
-// compare page
+// Single Page
+if (document.getElementsByClassName('titleName')[0]) {
+  // Get game title
+  game = document.getElementsByClassName('titleName')[0].textContent;
+  // Insert XAES content
+  insertSingle();
+  // Add achievement guide buttons
+  achievementGuideSingle();
+}
+game = game.trim();
 
-var game = $('.gameTitle span').text() || $('.titleName').text();
-game = $.trim(game);
+function insertCompare() {
+  var parser = new DOMParser();
+  var compareHtml =  ['<div id="xaes-box" class="border-bottom">',
+                        '<h1>Xbox Achievement Enhancement Suite</h1>',
+                        '<h3>Filter by which person has the achievement unlocked.</h3>',
+                        '<div class="btn-group">',
+                          '<span class="btn btn-primary active">',
+                            '<input type="radio" name="filter" id="all" value="all" checked="checked">',
+                            '<label for="all">All</label>',
+                          '</span>',
+                          '<span class="btn btn-primary">',
+                            '<input type="radio" name="filter" id="one-person" value="one-person">',
+                            '<label for="one-person">Only One Person</label>',
+                          '</span>',
+                          '<span class="btn btn-primary">',
+                            '<input type="radio" name="filter" id="neither-person" value="neither-person">',
+                            '<label for="neither-person">Neither Person</label>',
+                          '</span>',
+                          '<span class="btn btn-primary">',
+                            '<input type="radio" name="filter" id="left-person" value="left-person">',
+                            '<label for="left-person">Left Person</label>',
+                          '</span>',
+                          '<span class="btn btn-primary">',
+                            '<input type="radio" name="filter" id="right-person" value="right-person">',
+                            '<label for="right-person">Right Person</label>',
+                          '</span>',
+                        '</div>',
+                        '<h3>Filter by achievement name or description.</h3>',
+                        '<input type ="text" id="filter-titles" placeholder="Just start typing">',
+                      '</div>'
+                    ].join('');
 
-var compareHtml = ['<div id="xaes-box" class="border-bottom">',
-              '<h1>Xbox Achievement Enhancement Suite</h1>',
-              '<h3>Filter by which person has the achievement unlocked.</h3>',
-              '<div class="btn-group">',
-                '<span class="btn btn-primary active">',
-                  '<input type="radio" name="filter" id="all" value="all" checked="checked">',
-                  '<label for="all">All</label>',
-                '</span>',
-                '<span class="btn btn-primary">',
-                  '<input type="radio" name="filter" id="one-person" value="one-person">',
-                  '<label for="one-person">Only One Person</label>',
-                '</span>',
-                '<span class="btn btn-primary">',
-                  '<input type="radio" name="filter" id="neither-person" value="neither-person">',
-                  '<label for="neither-person">Neither Person</label>',
-                '</span>',
-                '<span class="btn btn-primary">',
-                  '<input type="radio" name="filter" id="left-person" value="left-person">',
-                  '<label for="left-person">Left Person</label>',
-                '</span>',
-                '<span class="btn btn-primary">',
-                  '<input type="radio" name="filter" id="right-person" value="right-person">',
-                  '<label for="right-person">Right Person</label>',
-                '</span>',
-              '</div>',
-              '<h3>Filter by achievement name or description.</h3>',
-              '<input type ="text" id="filter-titles" placeholder="Just start typing">',
-            '</div>'
-          ].join('');
+  var compareDOM = parser.parseFromString(compareHtml, "text/html");
+  var newElems = compareDOM.firstChild.getElementsByTagName('div')[0];
+  var afterElem = document.getElementsByClassName('achievementData')[0];
+  insertAfter(newElems, afterElem);
+}
 
-var singleHtml = ['<div id="xaes-box" class="border-top">',
-                    '<h1>Xbox Achievement Enhancement Suite</h1>',
-                    '<h3>Filter achievements.</h3>',
-                    '<span id="toggle-images" class="btn btn-primary" style="float: right;">Toggle Images</span>',
-                    '<div class="btn-group">',
-                      '<span class="btn btn-primary active">',
-                        '<input type="radio" name="filter" id="single-all" value="single-all" checked="checked">',
-                        '<label for="single-all">All</label>',
-                      '</span>',
-                      '<span class="btn btn-primary">',
-                        '<input type="radio" name="filter" id="unlocked" value="unlocked">',
-                        '<label for="unlocked">Unlocked</label>',
-                      '</span>',
-                      '<span class="btn btn-primary">',
-                        '<input type="radio" name="filter" id="locked" value="locked">',
-                        '<label for="locked">Locked</label>',
-                      '</span>',
-                    '</div>',
-                    '<h3>Filter by achievement name or description.</h3>',
-                    '<input type ="text" id="filter-titles-single" placeholder="Just start typing">',
-                  '</div>'
-                ].join('');
+function insertSingle() {
+  var parser = new DOMParser();
+  var singleHtml = ['<div id="xaes-box" class="border-top">',
+                      '<h1>Xbox Achievement Enhancement Suite</h1>',
+                      '<h3>Filter achievements.</h3>',
+                      '<span id="toggle-images" class="btn btn-primary" style="float: right;">Toggle Images</span>',
+                      '<div class="btn-group">',
+                        '<span class="btn btn-primary active">',
+                          '<input type="radio" name="filter" id="single-all" value="single-all" checked="checked">',
+                          '<label for="single-all">All</label>',
+                        '</span>',
+                        '<span class="btn btn-primary">',
+                          '<input type="radio" name="filter" id="unlocked" value="unlocked">',
+                          '<label for="unlocked">Unlocked</label>',
+                        '</span>',
+                        '<span class="btn btn-primary">',
+                          '<input type="radio" name="filter" id="locked" value="locked">',
+                          '<label for="locked">Locked</label>',
+                        '</span>',
+                      '</div>',
+                      '<h3>Filter by achievement name or description.</h3>',
+                      '<input type ="text" id="filter-titles-single" placeholder="Just start typing">',
+                    '</div>'
+                  ].join('');
 
-
-$('.achievementData').after(compareHtml);
-$('.userInfoAndTitleImage').after(singleHtml);
-
-// Add achievement guide buttons
-achievementGuide();
-achievementGuideSingle();
-
+  var singleDOM = parser.parseFromString(singleHtml, "text/html");
+  var newElems = singleDOM.firstChild.getElementsByTagName('div')[0];
+  var afterElem = document.getElementsByClassName('userInfoAndTitleImage')[0];
+  insertAfter(newElems, afterElem);
+}
 
 // Event listeners
-$('#xaes-box .btn-group .btn').click(function() {
-  $($(this).children('input[type=radio]')).trigger('change').prop("checked", true);
-  $('#xaes-box .btn').removeClass('active');
-  $(this).addClass('active');
-});
+var xaesBoxButtons = document.getElementById('xaes-box').getElementsByClassName('btn-group')[0].getElementsByClassName('btn');
+for (var i = 0; i < xaesBoxButtons.length; i++) {
+  xaesBoxButtons[i].addEventListener('click', function() {
+    $($(this).children('input[type=radio]')).trigger('change').prop("checked", true);
+    $('#xaes-box .btn').removeClass('active');
+    $(this).addClass('active');
+  });
+}
 
-$('#toggle-images').click(function() {
+document.getElementById('toggle-images').addEventListener('click', function() {
   toggleImages();
 });
 
@@ -219,22 +243,27 @@ function achievementGuideSingle() {
 }
 
 function locked() {
-  $('.earnedAchievementsInfo').addClass('radio-level-hide');
-  $('.lockedAchievementsInfo').removeClass('radio-level-hide');
+  document.getElementsByClassName('earnedAchievementsInfo')[0].classList.add('radio-level-hide');
+  document.getElementsByClassName('lockedAchievementsInfo')[0].classList.remove('radio-level-hide');
 }
 
 function unlocked() {
-  $('.earnedAchievementsInfo').removeClass('radio-level-hide');
-  $('.lockedAchievementsInfo').addClass('radio-level-hide');
+  document.getElementsByClassName('earnedAchievementsInfo')[0].classList.remove('radio-level-hide');
+  document.getElementsByClassName('lockedAchievementsInfo')[0].classList.add('radio-level-hide');
 }
 
 function singleAll() {
-  $('.earnedAchievementsInfo').removeClass('radio-level-hide');
-  $('.lockedAchievementsInfo').removeClass('radio-level-hide');
+  document.getElementsByClassName('earnedAchievementsInfo')[0].classList.remove('radio-level-hide');
+  document.getElementsByClassName('lockedAchievementsInfo')[0].classList.remove('radio-level-hide');
 }
 
-});
+function insertAfter(newNode, referenceNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}
 
 function toggleImages() {
-  $('.achievementImageWrapper').toggle();
+  var images = document.getElementsByClassName('achievementImageWrapper');
+  for (var i = 0; i < images.length; i++) {
+    images[i].classList.toggle('hidden');
+  }
 }

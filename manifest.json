@@ -11,7 +11,7 @@
       "matches": ["https://account.xbox.com/*"],
       "css": ["css/style.css"],
       "js": ["js/libs/zepto.min.js", "js/main.js", "js/ga-config.js", "js/ga.js", "js/js15_as.js"],
-      "run_at": "document_start"
+      "run_at": "document_end"
     }
   ],
   "page_action" :
