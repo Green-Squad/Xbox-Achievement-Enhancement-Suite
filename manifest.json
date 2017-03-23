@@ -1,6 +1,6 @@
 {
   "name": "Xbox Achievement Enhancement Suite",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Filter and sort Xbox Live Achievements.",
   "background": {
     "page": "html/background.html",

@@ -250,9 +250,15 @@ function achievementGuideSingle() {
 
 var hideAchievements = function(status) {
   var achievementDetailButtons = document.getElementsByClassName('achievementDetailButton');
-  var statusRegex = new RegExp("\\b" + status + "\\b");
+  if (status === 'unlocked') {
+    var statusRegex = new RegExp("\\b" + status + "\\b");
+  } else {
+    var statusRegex = new RegExp("\\blocked\\b|%");
+
+  }
   for (var i = 0; i < achievementDetailButtons.length; i++) {
-    var achievementStatus = achievementDetailButtons[i].childNodes[1].childNodes[3].childNodes[3].textContent.trim().toLowerCase();
+    //var achievementStatus = achievementDetailButtons[i].childNodes[1].childNodes[3].childNodes[3].textContent.trim().toLowerCase();
+    var achievementStatus = achievementDetailButtons[i].getElementsByClassName('achievementStatus')[0].dataset.status.trim().toLowerCase();
     if (statusRegex.test(achievementStatus)) {
       achievementDetailButtons[i].classList.remove('radio-level-hide');
     } else {
