@@ -206,19 +206,16 @@ function matchTitle(query) {
 
 function matchTitleSingle(query) {
   query = query.toLowerCase();
-  $.each($('.bodyContent li'), function() {
-    var title = $(this).children('.achievementInfo')
-                .children('.achievementName')
-                .children('a').text().toLowerCase();
-    var description = $(this).children('.achievementInfo')
-                      .children('.achievementDescription')
-                      .text().toLowerCase();
-    if(!title.match(query) && !description.match(query)) {
-      $(this).addClass('text-level-hide');
+  var items = document.getElementsByClassName('achievementDetailButton');
+  for (var i = 0; i < items.length; i++) {
+    var title = items[i].childNodes[1].childNodes[3].childNodes[1].childNodes[1].childNodes[1].textContent.trim().toLowerCase();
+    var description = items[i].childNodes[1].childNodes[3].childNodes[1].childNodes[1].childNodes[3].textContent.trim().toLowerCase();
+    if(!title.includes(query) && !description.includes(query)) {
+      items[i].classList.add('text-level-hide');
     } else {
-      $(this).removeClass('text-level-hide');
+      items[i].classList.remove('text-level-hide');
     }
-  });
+  }
 }
 
 function achievementGuide() {
