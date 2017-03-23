@@ -98,9 +98,12 @@ for (var i = 0; i < xaesBoxButtons.length; i++) {
   });
 }
 
-document.getElementById('toggle-images').addEventListener('click', function() {
-  toggleImages();
-});
+var toggleImagesElement = document.getElementById('toggle-images');
+if (toggleImagesElement) {
+  toggleImagesElement.addEventListener('click', function() {
+    toggleImages();
+  });
+}
 
 $('input[type=radio]').change(function() {
    var value = $(this).attr('value');
@@ -266,7 +269,7 @@ function insertAfter(newNode, referenceNode) {
 }
 
 function toggleImages() {
-  var images = document.getElementsByClassName('achievementImageWrapper');
+  var images = document.getElementsByClassName('brandedArt');
   for (var i = 0; i < images.length; i++) {
     images[i].classList.toggle('hidden');
   }
