@@ -208,8 +208,8 @@ function matchTitleSingle(query) {
   query = query.toLowerCase();
   var items = document.getElementsByClassName('achievementDetailButton');
   for (var i = 0; i < items.length; i++) {
-    var title = items[i].childNodes[1].childNodes[3].childNodes[1].childNodes[1].childNodes[1].textContent.trim().toLowerCase();
-    var description = items[i].childNodes[1].childNodes[3].childNodes[1].childNodes[1].childNodes[3].textContent.trim().toLowerCase();
+    var title = items[i].getElementsByClassName('mainAchievementTitle')[0].textContent.trim().toLowerCase();
+    var description = items[i].getElementsByClassName('mainAchievementDescription')[0].textContent.trim().toLowerCase();
     if(!title.includes(query) && !description.includes(query)) {
       items[i].classList.add('text-level-hide');
     } else {
@@ -221,7 +221,7 @@ function matchTitleSingle(query) {
 function achievementGuide() {
   var achievementImages = document.getElementsByClassName('achievementImage');
   for (var i = 0; i < achievementImages.length; i++) {
-    var title = achievementImages[i].childNodes[3].childNodes[1].textContent.trim();
+    var title = achievementImages[i].getElementsByClassName('achievementTitle')[0].textContent.trim();
     var parser = new DOMParser();
     //var guideHTML = '<a href="http://google.com/search?q=' + title + ' achievement guide '
     //  + game + '&btnI=I%27m+Feeling+Lucky" class="btn btn-primary guide-single">Guide</a>';
@@ -229,14 +229,14 @@ function achievementGuide() {
       + game + '+site:trueachievements.com" class="btn btn-primary guide">Guide</a>';
     var guideDOM = parser.parseFromString(guideHTML, "text/html");
     var guideButton = guideDOM.firstChild.getElementsByTagName('a')[0];
-    insertAfter(guideButton, achievementImages[i].childNodes[3].childNodes[3]);
+    insertAfter(guideButton, achievementImages[i].getElementsByClassName('description')[0]);
   }
 }
 
 function achievementGuideSingle() {
   var achievementTitles = document.getElementsByClassName('titleArea');
   for (var i = 0; i < achievementTitles.length; i++) {
-    var title = achievementTitles[i].childNodes[1].textContent.trim();
+    var title = achievementTitles[i].getElementsByClassName('mainAchievementTitle')[0].textContent.trim();
     var parser = new DOMParser();
     //var guideHTML = '<a href="http://google.com/search?q=' + title + ' achievement guide '
     //  + game + '&btnI=I%27m+Feeling+Lucky" class="btn btn-primary guide-single">Guide</a>';
@@ -257,7 +257,6 @@ var hideAchievements = function(status) {
 
   }
   for (var i = 0; i < achievementDetailButtons.length; i++) {
-    //var achievementStatus = achievementDetailButtons[i].childNodes[1].childNodes[3].childNodes[3].textContent.trim().toLowerCase();
     var achievementStatus = achievementDetailButtons[i].getElementsByClassName('achievementStatus')[0].dataset.status.trim().toLowerCase();
     if (statusRegex.test(achievementStatus)) {
       achievementDetailButtons[i].classList.remove('radio-level-hide');
