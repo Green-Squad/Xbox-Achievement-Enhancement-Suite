@@ -9,9 +9,9 @@ if (document.getElementsByClassName('gameTitle')[0]) {
 }
 
 // Single Page
-if (document.getElementsByClassName('titleName')[0]) {
+if (document.getElementById('newProfileViewMygamertagWrapper')) {
   // Get game title
-  game = document.getElementsByClassName('titleName')[0].textContent;
+  game = document.getElementById('newProfileViewMygamertagWrapper').textContent;
   // Insert XAES content
   insertSingle();
   // Add achievement guide buttons
@@ -84,7 +84,7 @@ function insertSingle() {
 
   var singleDOM = parser.parseFromString(singleHtml, "text/html");
   var newElems = singleDOM.firstChild.getElementsByTagName('div')[0];
-  var afterElem = document.getElementsByClassName('userInfoAndTitleImage')[0];
+  var afterElem = document.getElementsByClassName('filterArea')[0];
   insertAfter(newElems, afterElem);
 }
 
@@ -115,11 +115,11 @@ $('input[type=radio]').change(function() {
    } else if (value == 'right-person') {
      rightPerson();
    } else if (value == 'unlocked') {
-     unlocked();
+     hideAchievements('unlocked');
    } else if (value == 'locked') {
-     locked();
+     hideAchievements('locked');
    } else if (value == 'single-all') {
-     singleAll();
+     showAchievements();
    }
 });
 
@@ -239,22 +239,26 @@ function achievementGuideSingle() {
                 '" class="btn btn-primary guide">Guide</a>';
     $(this).append(guide);
   });
-
 }
 
-function locked() {
-  document.getElementsByClassName('earnedAchievementsInfo')[0].classList.add('radio-level-hide');
-  document.getElementsByClassName('lockedAchievementsInfo')[0].classList.remove('radio-level-hide');
+var hideAchievements = function(status) {
+  var achievementDetailButtons = document.getElementsByClassName('achievementDetailButton');
+  var statusRegex = new RegExp("\\b" + status + "\\b");
+  for (var i = 0; i < achievementDetailButtons.length; i++) {
+    var achievementStatus = achievementDetailButtons[i].childNodes[1].childNodes[3].childNodes[3].textContent.trim().toLowerCase();
+    if (statusRegex.test(achievementStatus)) {
+      achievementDetailButtons[i].classList.remove('radio-level-hide');
+    } else {
+      achievementDetailButtons[i].classList.add('radio-level-hide');
+    }
+  }
 }
 
-function unlocked() {
-  document.getElementsByClassName('earnedAchievementsInfo')[0].classList.remove('radio-level-hide');
-  document.getElementsByClassName('lockedAchievementsInfo')[0].classList.add('radio-level-hide');
-}
-
-function singleAll() {
-  document.getElementsByClassName('earnedAchievementsInfo')[0].classList.remove('radio-level-hide');
-  document.getElementsByClassName('lockedAchievementsInfo')[0].classList.remove('radio-level-hide');
+var  showAchievements = function() {
+  var achievementDetailButtons = document.getElementsByClassName('achievementDetailButton');
+  for (var i = 0; i < achievementDetailButtons.length; i++) {
+    achievementDetailButtons[i].classList.remove('radio-level-hide');
+  }
 }
 
 function insertAfter(newNode, referenceNode) {
