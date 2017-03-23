@@ -54,6 +54,12 @@
   margin-top: 10px;
 }
 
+.guide-single {
+  margin-top: 30px;
+  margin-left: 15px;
+  position: absolute;
+}
+
 .hidden {
   display: none !important;
 }

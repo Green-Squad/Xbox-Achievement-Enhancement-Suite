@@ -1,7 +1,7 @@
 // Compare Page
 if (document.getElementsByClassName('gameTitle')[0]) {
   // Get game title
-  game = document.getElementsByClassName('gameTitle')[0].getElementsByTagName('span')[0].textContent;
+  game = document.getElementsByClassName('gameTitle')[0].getElementsByTagName('span')[0].textContent.trim();
   // Insert XAES content
   insertCompare();
   // Add achievement guide buttons
@@ -11,13 +11,12 @@ if (document.getElementsByClassName('gameTitle')[0]) {
 // Single Page
 if (document.getElementById('newProfileViewMygamertagWrapper')) {
   // Get game title
-  game = document.getElementById('newProfileViewMygamertagWrapper').textContent;
+  game = document.getElementById('newProfileViewMygamertagWrapper').textContent.trim();
   // Insert XAES content
   insertSingle();
   // Add achievement guide buttons
   achievementGuideSingle();
 }
-game = game.trim();
 
 function insertCompare() {
   var parser = new DOMParser();
@@ -223,25 +222,33 @@ function matchTitleSingle(query) {
 }
 
 function achievementGuide() {
-  $.each($('.achievementImage'), function() {
-    var title = $(this).children('.achievementDescription')
-                .children('.achievementTitle').text();
-    var guide = '<a href="http://google.com/#q=' + $.trim(title) +
-                ' achievement guide ' + game +
-                '" class="btn btn-primary guide">Guide</a>';
-    $($(this).children('.achievementDescription')).append(guide);
-  });
+  var achievementImages = document.getElementsByClassName('achievementImage');
+  for (var i = 0; i < achievementImages.length; i++) {
+    var title = achievementImages[i].childNodes[3].childNodes[1].textContent.trim();
+    var parser = new DOMParser();
+    //var guideHTML = '<a href="http://google.com/search?q=' + title + ' achievement guide '
+    //  + game + '&btnI=I%27m+Feeling+Lucky" class="btn btn-primary guide-single">Guide</a>';
+    var guideHTML = '<a target="_blank" href="https://duckduckgo.com?q=!ducky+' + title + ' achievement guide '
+      + game + '+site:trueachievements.com" class="btn btn-primary guide">Guide</a>';
+    var guideDOM = parser.parseFromString(guideHTML, "text/html");
+    var guideButton = guideDOM.firstChild.getElementsByTagName('a')[0];
+    insertAfter(guideButton, achievementImages[i].childNodes[3].childNodes[3]);
+  }
 }
 
 function achievementGuideSingle() {
-  $.each($('li .achievementInfo'), function() {
-    var title = $(this).children('.achievementName')
-                .children('a').text();
-    var guide = '<a href="http://google.com/#q=' + $.trim(title) +
-                ' achievement guide ' + game +
-                '" class="btn btn-primary guide">Guide</a>';
-    $(this).append(guide);
-  });
+  var achievementTitles = document.getElementsByClassName('titleArea');
+  for (var i = 0; i < achievementTitles.length; i++) {
+    var title = achievementTitles[i].childNodes[1].textContent.trim();
+    var parser = new DOMParser();
+    //var guideHTML = '<a href="http://google.com/search?q=' + title + ' achievement guide '
+    //  + game + '&btnI=I%27m+Feeling+Lucky" class="btn btn-primary guide-single">Guide</a>';
+    var guideHTML = '<a target="_blank" href="https://duckduckgo.com?q=!ducky+' + title + ' achievement guide '
+      + game + '+site:trueachievements.com" class="btn btn-primary guide-single">Guide</a>';
+    var guideDOM = parser.parseFromString(guideHTML, "text/html");
+    var guideButton = guideDOM.firstChild.getElementsByTagName('a')[0];
+    insertAfter(guideButton, achievementTitles[i]);
+  }
 }
 
 var hideAchievements = function(status) {
